@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const BasicMenu = () => {
+
+    const loginState = useSelector(state => state.loginSlice)
+
     return (
         <nav id='navbar' className=" flex  bg-blue-300">
 
@@ -12,19 +16,33 @@ const BasicMenu = () => {
                     <li className="pr-6 text-2xl">
                         <Link to={'/about'}>About</Link>
                     </li>
-                    <li className="pr-6 text-2xl">
-                        <Link to={'/todo/'}>Todo</Link>
-                    </li>
-                    <li className="pr-6 text-2xl">
-                        <Link to={'/products/'}>Products</Link>
-                    </li>
+
+                    {loginState.email ?
+                        <>
+                            <li className="pr-6 text-2xl">
+                                <Link to={'/todo/'}>Todo</Link>
+                            </li>
+                            <li className="pr-6 text-2xl">
+                                <Link to={'/products/'}>Products</Link>
+                            </li>
+                        </>
+                        :
+                        <></>
+                    }
+
                 </ul>
             </div>
 
             <div className="w-1/5 flex justify-end bg-orange-300 p-4 font-medium">
-                <div className="text-white text-sm m-1 rounded" >
-                    Login
-                </div>
+                { ! loginState.email ?
+                    <div className="text-white text-sm m-1 rounded" >
+                        <Link to={'/member/login'}>Login</Link>
+                    </div>
+                    :
+                    <div className="text-white text-sm m-1 rounded" >
+                        <Link to={'/member/logout'}>Logout</Link>
+                    </div>
+                }
             </div>
         </nav>
     );
