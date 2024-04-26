@@ -23,7 +23,14 @@ const loginSlice = createSlice({
     reducers: {
         // state: 기존 상태, action: 내가 처리하고 싶은 데이터(파라미터)
         login: (state, action) => {
-            return {email: action.payload.email}
+            console.log("login.........", action)
+            console.log(action.payload)
+            console.log("--------------")
+
+            setCookie("member", JSON.stringify(action.payload), 1)
+
+
+            return action.payload
         },
         logout: () => {
 
